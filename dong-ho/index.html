@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Đồng Hồ</title>
+    <meta name="description" content="动态表盘时钟代码在线演示，精准同步标准时间。">
+    <meta name="keywords" content="动态时钟代码,表盘时钟代码">
+    <link rel="icon" href="/wp-content/uploads/2019/03/cropped-20190323_065108_12-32x32.png" sizes="32x32">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="js/test.js"></script>
+    <script src="js/common.js"></script>
+    <script src="js/config.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            /* background: url("../images/bg.jpg") no-repeat;
+            background-size: 100% 100%; */
+            background-attachment: fixed;
+            color: #F5F4F6;
+            font-size: 12px;
+            font-weight: bold;
+            overflow: hidden;
+            width: 1000px;
+            height: 900px;
+            font-family: "微软雅黑";
+
+        }
+
+        audio {
+            position: absolute;
+            right: 0;
+            opacity: 0.1;
+            transition: all 1s;
+
+        }
+
+        audio:hover {
+            opacity: 1;
+        }
+
+        .current {
+            color: rgb(34, 172, 22);
+        }
+
+
+        video {
+            z-index: -1;
+            /* object-fit: fill; */
+            position: fixed;
+            /* right: 0px;
+            bottom: 0px; */
+            min-width: 100%;
+            min-height: 100%;
+            /* height: auto;
+            width: auto; */
+        }
+
+
+        .main-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+        }
+
+
+        .main-content .year {
+            position: relative;
+            top: -13px;
+            left: -38px;
+            text-align: center
+        }
+
+        .main-content .year span {
+            position: absolute;
+            width: 80px;
+        }
+
+
+
+        .main-content .month {
+            position: relative;
+            top: -13px;
+            left: 40px;
+        }
+
+        .month span {
+            position: absolute;
+            width: 60px;
+
+        }
+
+
+
+
+        .main-content .day {
+            position: relative;
+            top: -13px;
+            left: 85px;
+        }
+
+        .day span {
+            position: absolute;
+            width: 65px;
+
+        }
+
+
+
+
+        .main-content .week {
+            position: relative;
+            top: -13px;
+            left: 145px;
+        }
+
+        .week span {
+            position: absolute;
+            width: 65px;
+
+        }
+
+
+        .main-content .shichen {
+            position: relative;
+            top: -13px;
+            left: 200px;
+        }
+
+        .shichen span {
+            position: absolute;
+            width: 125px;
+
+        }
+
+
+        .main-content .hour {
+            position: relative;
+            top: -13px;
+            left: 240px;
+        }
+
+        .hour span {
+            position: absolute;
+            width: 60px;
+
+        }
+
+
+        .main-content .minute {
+            position: relative;
+            top: -13px;
+            left: 300px;
+        }
+
+        .minute span {
+            position: absolute;
+            width: 60px;
+
+        }
+
+
+        .main-content .second {
+            position: relative;
+            top: -13px;
+            left: 370px;
+        }
+
+        .second span {
+            position: absolute;
+            width: 60px;
+
+        }
+    </style>
+</head>
+
+<body style="color: rgb(255, 255, 255); background: url(&quot;images/bg.jpg&quot;) 0% 0% / 100% 100% no-repeat fixed;">
+
+
+
+    <div class="main-content">
+        <div class="year"><span class="current">2020 Year</span></div>
+        <div class="month" style="left: 40px;"><span class="current"
+                style="animation: 0s linear 0s 1 normal forwards running month0;">Apr</span><span
+                style="animation: 0s linear 0s 1 normal forwards running month1;">May</span><span
+                style="animation: 0s linear 0s 1 normal forwards running month2;">Jun</span><span
+                style="animation: 0s linear 0s 1 normal forwards running month3;">Jul</span><span
+                style="animation: 0s linear 0s 1 normal forwards running month4;">Aug</span><span
+                style="animation: 0s linear 0s 1 normal forwards running month5;">Sep</span><span
+                style="animation: 0s linear 0s 1 normal forwards running month6;">Oct</span><span
+                style="animation: 0s linear 0s 1 normal forwards running month7;">Nov</span><span
+                style="animation: 0s linear 0s 1 normal forwards running month8;">Dec</span><span
+                style="animation: 0s linear 0s 1 normal forwards running month9;">Jan</span><span
+                style="animation: 0s linear 0s 1 normal forwards running month10;">Feb</span><span
+                style="animation: 0s linear 0s 1 normal forwards running month11;">Mar</span></div>
+        <div class="day" style="left: 75px;"><span class="current"
+                style="animation: 0s linear 0s 1 normal forwards running day0;">12 day</span><span
+                style="animation: 0s linear 0s 1 normal forwards running day1;">13 day</span><span
+                style="animation: 0s linear 0s 1 normal forwards running day2;">14 day</span><span
+                style="animation: 0s linear 0s 1 normal forwards running day3;">15 day</span><span
+                style="animation: 0s linear 0s 1 normal forwards running day4;">16 day</span><span
+                style="animation: 0s linear 0s 1 normal forwards running day5;">17 day</span><span
+                style="animation: 0s linear 0s 1 normal forwards running day6;">18 day</span><span
+                style="animation: 0s linear 0s 1 normal forwards running day7;">19 day</span><span
+                style="animation: 0s linear 0s 1 normal forwards running day8;">20 day</span><span
+                style="animation: 0s linear 0s 1 normal forwards running day9;">21 day</span><span
+                style="animation: 0s linear 0s 1 normal forwards running day10;">22 day</span><span
+                style="animation: 0s linear 0s 1 normal forwards running day11;">23 day</span><span
+                style="animation: 0s linear 0s 1 normal forwards running day12;">24 day</span><span
+                style="animation: 0s linear 0s 1 normal forwards running day13;">25 day</span><span
+                style="animation: 0s linear 0s 1 normal forwards running day14;">26 day</span><span
+                style="animation: 0s linear 0s 1 normal forwards running day15;">27 day</span><span
+                style="animation: 0s linear 0s 1 normal forwards running day16;">28 day</span><span
+                style="animation: 0s linear 0s 1 normal forwards running day17;">29 day</span><span
+                style="animation: 0s linear 0s 1 normal forwards running day18;">30 day</span><span
+                style="animation: 0s linear 0s 1 normal forwards running day19;">1 day</span><span
+                style="animation: 0s linear 0s 1 normal forwards running day20;">2 day</span><span
+                style="animation: 0s linear 0s 1 normal forwards running day21;">3 day</span><span
+                style="animation: 0s linear 0s 1 normal forwards running day22;">4 day</span><span
+                style="animation: 0s linear 0s 1 normal forwards running day23;">5 day</span><span
+                style="animation: 0s linear 0s 1 normal forwards running day24;">6 day</span><span
+                style="animation: 0s linear 0s 1 normal forwards running day25;">7 day</span><span
+                style="animation: 0s linear 0s 1 normal forwards running day26;">8 day</span><span
+                style="animation: 0s linear 0s 1 normal forwards running day27;">9 day</span><span
+                style="animation: 0s linear 0s 1 normal forwards running day28;">10 day</span><span
+                style="animation: 0s linear 0s 1 normal forwards running day29;">11 day</span></div>
+        <div class="week" style="left: 125px;"><span class="current"
+                style="animation: 0s linear 0s 1 normal forwards running week0;">Sun</span><span
+                style="animation: 0s linear 0s 1 normal forwards running week1;">Mon</span><span
+                style="animation: 0s linear 0s 1 normal forwards running week2;">Tues</span><span
+                style="animation: 0s linear 0s 1 normal forwards running week3;">Wed</span><span
+                style="animation: 0s linear 0s 1 normal forwards running week4;">Thur</span><span
+                style="animation: 0s linear 0s 1 normal forwards running week5;">Fri</span><span
+                style="animation: 0s linear 0s 1 normal forwards running week6;">Sat</span></div>
+        <div class="shichen" style="left: 160px;"><span class="current"
+                style="animation: 0s linear 0s 1 normal forwards running shichen0;">15pm to 17pm</span><span
+                style="animation: 0s linear 0s 1 normal forwards running shichen1;">17pm to 19pm</span><span
+                style="animation: 0s linear 0s 1 normal forwards running shichen2;">19pm to 21pm</span><span
+                style="animation: 0s linear 0s 1 normal forwards running shichen3;">21pm to 23pm</span><span
+                style="animation: 0s linear 0s 1 normal forwards running shichen4;">23pm to 1am</span><span
+                style="animation: 0s linear 0s 1 normal forwards running shichen5;">1am to 3am</span><span
+                style="animation: 0s linear 0s 1 normal forwards running shichen6;">3am to 5am</span><span
+                style="animation: 0s linear 0s 1 normal forwards running shichen7;">5pm to 7am</span><span
+                style="animation: 0s linear 0s 1 normal forwards running shichen8;">7pm to 9am</span><span
+                style="animation: 0s linear 0s 1 normal forwards running shichen9;">9pm to 11am</span><span
+                style="animation: 0s linear 0s 1 normal forwards running shichen10;">11am to 13pm</span><span
+                style="animation: 0s linear 0s 1 normal forwards running shichen11;">13pm to 15pm</span></div>
+        <div class="hour" style="left: 255px;"><span class="current"
+                style="animation: 0s linear 0s 1 normal forwards running hour0;">16 h</span><span
+                style="animation: 0s linear 0s 1 normal forwards running hour1;">17 h</span><span
+                style="animation: 0s linear 0s 1 normal forwards running hour2;">18 h</span><span
+                style="animation: 0s linear 0s 1 normal forwards running hour3;">19 h</span><span
+                style="animation: 0s linear 0s 1 normal forwards running hour4;">20 h</span><span
+                style="animation: 0s linear 0s 1 normal forwards running hour5;">21 h</span><span
+                style="animation: 0s linear 0s 1 normal forwards running hour6;">22 h</span><span
+                style="animation: 0s linear 0s 1 normal forwards running hour7;">23 h</span><span
+                style="animation: 0s linear 0s 1 normal forwards running hour8;">0 h</span><span
+                style="animation: 0s linear 0s 1 normal forwards running hour9;">1 h</span><span
+                style="animation: 0s linear 0s 1 normal forwards running hour10;">2 h</span><span
+                style="animation: 0s linear 0s 1 normal forwards running hour11;">3 h</span><span
+                style="animation: 0s linear 0s 1 normal forwards running hour12;">4 h</span><span
+                style="animation: 0s linear 0s 1 normal forwards running hour13;">5 h</span><span
+                style="animation: 0s linear 0s 1 normal forwards running hour14;">6 h</span><span
+                style="animation: 0s linear 0s 1 normal forwards running hour15;">7 h</span><span
+                style="animation: 0s linear 0s 1 normal forwards running hour16;">8 h</span><span
+                style="animation: 0s linear 0s 1 normal forwards running hour17;">9 h</span><span
+                style="animation: 0s linear 0s 1 normal forwards running hour18;">10 h</span><span
+                style="animation: 0s linear 0s 1 normal forwards running hour19;">11 h</span><span
+                style="animation: 0s linear 0s 1 normal forwards running hour20;">12 h</span><span
+                style="animation: 0s linear 0s 1 normal forwards running hour21;">13 h</span><span
+                style="animation: 0s linear 0s 1 normal forwards running hour22;">14 h</span><span
+                style="animation: 0s linear 0s 1 normal forwards running hour23;">15 h</span></div>
+        <div class="minute" style="left: 295px; animation: 0.5s ease-in-out 0s 1 normal forwards running minuteRun3;">
+            <span class="" style="animation: 0s linear 0s 1 normal forwards running minute0;">52 m</span><span class=""
+                style="animation: 0s linear 0s 1 normal forwards running minute1;">53 m</span><span class=""
+                style="animation: 0s linear 0s 1 normal forwards running minute2;">54 m</span><span class="current"
+                style="animation: 0s linear 0s 1 normal forwards running minute3;">55 m</span><span
+                style="animation: 0s linear 0s 1 normal forwards running minute4;">56 m</span><span
+                style="animation: 0s linear 0s 1 normal forwards running minute5;">57 m</span><span
+                style="animation: 0s linear 0s 1 normal forwards running minute6;">58 m</span><span
+                style="animation: 0s linear 0s 1 normal forwards running minute7;">59 m</span><span
+                style="animation: 0s linear 0s 1 normal forwards running minute8;">0 m</span><span
+                style="animation: 0s linear 0s 1 normal forwards running minute9;">1 m</span><span
+                style="animation: 0s linear 0s 1 normal forwards running minute10;">2 m</span><span
+                style="animation: 0s linear 0s 1 normal forwards running minute11;">3 m</span><span
+                style="animation: 0s linear 0s 1 normal forwards running minute12;">4 m</span><span
+                style="animation: 0s linear 0s 1 normal forwards running minute13;">5 m</span><span
+                style="animation: 0s linear 0s 1 normal forwards running minute14;">6 m</span><span
+                style="animation: 0s linear 0s 1 normal forwards running minute15;">7 m</span><span
+                style="animation: 0s linear 0s 1 normal forwards running minute16;">8 m</span><span
+                style="animation: 0s linear 0s 1 normal forwards running minute17;">9 m</span><span
+                style="animation: 0s linear 0s 1 normal forwards running minute18;">10 m</span><span
+                style="animation: 0s linear 0s 1 normal forwards running minute19;">11 m</span><span
+                style="animation: 0s linear 0s 1 normal forwards running minute20;">12 m</span><span
+                style="animation: 0s linear 0s 1 normal forwards running minute21;">13 m</span><span
+                style="animation: 0s linear 0s 1 normal forwards running minute22;">14 m</span><span
+                style="animation: 0s linear 0s 1 normal forwards running minute23;">15 m</span><span
+                style="animation: 0s linear 0s 1 normal forwards running minute24;">16 m</span><span
+                style="animation: 0s linear 0s 1 normal forwards running minute25;">17 m</span><span
+                style="animation: 0s linear 0s 1 normal forwards running minute26;">18 m</span><span
+                style="animation: 0s linear 0s 1 normal forwards running minute27;">19 m</span><span
+                style="animation: 0s linear 0s 1 normal forwards running minute28;">20 m</span><span
+                style="animation: 0s linear 0s 1 normal forwards running minute29;">21 m</span><span
+                style="animation: 0s linear 0s 1 normal forwards running minute30;">22 m</span><span
+                style="animation: 0s linear 0s 1 normal forwards running minute31;">23 m</span><span
+                style="animation: 0s linear 0s 1 normal forwards running minute32;">24 m</span><span
+                style="animation: 0s linear 0s 1 normal forwards running minute33;">25 m</span><span
+                style="animation: 0s linear 0s 1 normal forwards running minute34;">26 m</span><span
+                style="animation: 0s linear 0s 1 normal forwards running minute35;">27 m</span><span
+                style="animation: 0s linear 0s 1 normal forwards running minute36;">28 m</span><span
+                style="animation: 0s linear 0s 1 normal forwards running minute37;">29 m</span><span
+                style="animation: 0s linear 0s 1 normal forwards running minute38;">30 m</span><span
+                style="animation: 0s linear 0s 1 normal forwards running minute39;">31 m</span><span
+                style="animation: 0s linear 0s 1 normal forwards running minute40;">32 m</span><span
+                style="animation: 0s linear 0s 1 normal forwards running minute41;">33 m</span><span
+                style="animation: 0s linear 0s 1 normal forwards running minute42;">34 m</span><span
+                style="animation: 0s linear 0s 1 normal forwards running minute43;">35 m</span><span
+                style="animation: 0s linear 0s 1 normal forwards running minute44;">36 m</span><span
+                style="animation: 0s linear 0s 1 normal forwards running minute45;">37 m</span><span
+                style="animation: 0s linear 0s 1 normal forwards running minute46;">38 m</span><span
+                style="animation: 0s linear 0s 1 normal forwards running minute47;">39 m</span><span
+                style="animation: 0s linear 0s 1 normal forwards running minute48;">40 m</span><span
+                style="animation: 0s linear 0s 1 normal forwards running minute49;">41 m</span><span
+                style="animation: 0s linear 0s 1 normal forwards running minute50;">42 m</span><span
+                style="animation: 0s linear 0s 1 normal forwards running minute51;">43 m</span><span
+                style="animation: 0s linear 0s 1 normal forwards running minute52;">44 m</span><span
+                style="animation: 0s linear 0s 1 normal forwards running minute53;">45 m</span><span
+                style="animation: 0s linear 0s 1 normal forwards running minute54;">46 m</span><span
+                style="animation: 0s linear 0s 1 normal forwards running minute55;">47 m</span><span
+                style="animation: 0s linear 0s 1 normal forwards running minute56;">48 m</span><span
+                style="animation: 0s linear 0s 1 normal forwards running minute57;">49 m</span><span
+                style="animation: 0s linear 0s 1 normal forwards running minute58;">50 m</span><span
+                style="animation: 0s linear 0s 1 normal forwards running minute59;">51 m</span></div>
+        <div class="second" style="left: 335px; animation: 0.5s ease-in-out 0s 1 normal forwards running secondRun18;">
+            <span class="" style="animation: 0s linear 0s 1 normal forwards running second0;">59 s</span><span class=""
+                style="animation: 0s linear 0s 1 normal forwards running second1;">0 s</span><span class=""
+                style="animation: 0s linear 0s 1 normal forwards running second2;">1 s</span><span class=""
+                style="animation: 0s linear 0s 1 normal forwards running second3;">2 s</span><span class=""
+                style="animation: 0s linear 0s 1 normal forwards running second4;">3 s</span><span class=""
+                style="animation: 0s linear 0s 1 normal forwards running second5;">4 s</span><span class=""
+                style="animation: 0s linear 0s 1 normal forwards running second6;">5 s</span><span class=""
+                style="animation: 0s linear 0s 1 normal forwards running second7;">6 s</span><span class=""
+                style="animation: 0s linear 0s 1 normal forwards running second8;">7 s</span><span class=""
+                style="animation: 0s linear 0s 1 normal forwards running second9;">8 s</span><span class=""
+                style="animation: 0s linear 0s 1 normal forwards running second10;">9 s</span><span class=""
+                style="animation: 0s linear 0s 1 normal forwards running second11;">10 s</span><span class=""
+                style="animation: 0s linear 0s 1 normal forwards running second12;">11 s</span><span class=""
+                style="animation: 0s linear 0s 1 normal forwards running second13;">12 s</span><span class=""
+                style="animation: 0s linear 0s 1 normal forwards running second14;">13 s</span><span class=""
+                style="animation: 0s linear 0s 1 normal forwards running second15;">14 s</span><span class=""
+                style="animation: 0s linear 0s 1 normal forwards running second16;">15 s</span><span class=""
+                style="animation: 0s linear 0s 1 normal forwards running second17;">16 s</span><span class="current"
+                style="animation: 0s linear 0s 1 normal forwards running second18;">17 s</span><span class=""
+                style="animation: 0s linear 0s 1 normal forwards running second19;">18 s</span><span class=""
+                style="animation: 0s linear 0s 1 normal forwards running second20;">19 s</span><span class=""
+                style="animation: 0s linear 0s 1 normal forwards running second21;">20 s</span><span class=""
+                style="animation: 0s linear 0s 1 normal forwards running second22;">21 s</span><span class=""
+                style="animation: 0s linear 0s 1 normal forwards running second23;">22 s</span><span class=""
+                style="animation: 0s linear 0s 1 normal forwards running second24;">23 s</span><span class=""
+                style="animation: 0s linear 0s 1 normal forwards running second25;">24 s</span><span class=""
+                style="animation: 0s linear 0s 1 normal forwards running second26;">25 s</span><span class=""
+                style="animation: 0s linear 0s 1 normal forwards running second27;">26 s</span><span class=""
+                style="animation: 0s linear 0s 1 normal forwards running second28;">27 s</span><span class=""
+                style="animation: 0s linear 0s 1 normal forwards running second29;">28 s</span><span class=""
+                style="animation: 0s linear 0s 1 normal forwards running second30;">29 s</span><span class=""
+                style="animation: 0s linear 0s 1 normal forwards running second31;">30 s</span><span class=""
+                style="animation: 0s linear 0s 1 normal forwards running second32;">31 s</span><span class=""
+                style="animation: 0s linear 0s 1 normal forwards running second33;">32 s</span><span class=""
+                style="animation: 0s linear 0s 1 normal forwards running second34;">33 s</span><span class=""
+                style="animation: 0s linear 0s 1 normal forwards running second35;">34 s</span><span class=""
+                style="animation: 0s linear 0s 1 normal forwards running second36;">35 s</span><span class=""
+                style="animation: 0s linear 0s 1 normal forwards running second37;">36 s</span><span class=""
+                style="animation: 0s linear 0s 1 normal forwards running second38;">37 s</span><span class=""
+                style="animation: 0s linear 0s 1 normal forwards running second39;">38 s</span><span class=""
+                style="animation: 0s linear 0s 1 normal forwards running second40;">39 s</span><span class=""
+                style="animation: 0s linear 0s 1 normal forwards running second41;">40 s</span><span class=""
+                style="animation: 0s linear 0s 1 normal forwards running second42;">41 s</span><span class=""
+                style="animation: 0s linear 0s 1 normal forwards running second43;">42 s</span><span class=""
+                style="animation: 0s linear 0s 1 normal forwards running second44;">43 s</span><span class=""
+                style="animation: 0s linear 0s 1 normal forwards running second45;">44 s</span><span class=""
+                style="animation: 0s linear 0s 1 normal forwards running second46;">45 s</span><span class=""
+                style="animation: 0s linear 0s 1 normal forwards running second47;">46 s</span><span class=""
+                style="animation: 0s linear 0s 1 normal forwards running second48;">47 s</span><span class=""
+                style="animation: 0s linear 0s 1 normal forwards running second49;">48 s</span><span class=""
+                style="animation: 0s linear 0s 1 normal forwards running second50;">49 s</span><span class=""
+                style="animation: 0s linear 0s 1 normal forwards running second51;">50 s</span><span class=""
+                style="animation: 0s linear 0s 1 normal forwards running second52;">51 s</span><span class=""
+                style="animation: 0s linear 0s 1 normal forwards running second53;">52 s</span><span class=""
+                style="animation: 0s linear 0s 1 normal forwards running second54;">53 s</span><span class=""
+                style="animation: 0s linear 0s 1 normal forwards running second55;">54 s</span><span class=""
+                style="animation: 0s linear 0s 1 normal forwards running second56;">55 s</span><span class=""
+                style="animation: 0s linear 0s 1 normal forwards running second57;">56 s</span><span class=""
+                style="animation: 0s linear 0s 1 normal forwards running second58;">57 s</span><span class=""
+                style="animation: 0s linear 0s 1 normal forwards running second59;">58 s</span></div>
+    </div>
+    <div align="center"><a href="https://www.hit-counts.com/"><img
+                src="http://www.hit-counts.com/counter.php?t=MTQ0NTU3Ng==" border="0" alt="professional logo"></a><br>
+    </div>
+
+
+
+
+
+</body>
+
+</html>
